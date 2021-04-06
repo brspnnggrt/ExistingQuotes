@@ -4,13 +4,14 @@ import './App.css';
 import { Component } from 'react'
 import MaterialTable from 'material-table'
 
-// Get data from CPQ using iframe.contentWindow.postMessage(ko.toJSON(cpq.models.cartList.mainGrid), "https://brspnnggrt.github.io/")
+// Get data from CPQ using iframe.contentWindow.postMessage(JSON.parse(ko.toJSON(cpq.models.cartList.mainGrid)), "https://brspnnggrt.github.io/")
 
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      source: null,
       loading: true,
       // default columns & row data
       columns: [
@@ -22,17 +23,18 @@ class App extends Component {
       data: [{ name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 }],
     };
     this.onMessageReceived = event => {
-      if (!event.data.source) {
+      if (event.data.identifier === "react-existing-quotes") {
         console.log(event.data);
         this.setState({
+          source: event.source,
           loading: false,
-          columns: event.data.columns.map(col => { return { title: col.title, field: col.name}; }),
-          data: event.data.rows.map(row => { 
+          columns: event.data.columns.length ? event.data.columns.map(col => { return { title: col.title, field: col.name}; }) : this.state.columns,
+          data: event.data.rows.length ? event.data.rows.map(row => { 
             let keys = row.cells.slice(1).map(t => t.columnName);
             let values = row.cells.slice(1).map(t => t.value);
             let data = Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]));
             return data;
-          })
+          }) : this.state.data
         });
       }
     };
@@ -48,13 +50,16 @@ class App extends Component {
         <MaterialTable
             columns={this.state.columns}
             data={this.state.data}
-            title="Demo Title"
+            title="Existing Quotes"
             actions={[
               {
-                icon: 'save',
-                tooltip: 'Save User',
+                icon: "Delete",
+                tooltip: "Delete the quote",
                 onClick: (event, rowData) => {
-                  // Do save operation
+                  this.state.source.postMessage({
+                    "execute": `cpq.models.cartList.mainGrid.rows()[${this.state.data.indexOf(rowData)}].actions()[1].activate`,
+                    "identifier": "react-existing-quotes-execute"
+                  });
                 }
               }
             ]}
