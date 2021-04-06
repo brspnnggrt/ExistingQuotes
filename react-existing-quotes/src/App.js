@@ -8,7 +8,7 @@ import MaterialTable from 'material-table'
 
 data = JSON.parse(ko.toJSON(cpq.models.cartList.mainGrid));
 data["identifier"] = "react-existing-quotes";
-iframe.contentWindow.postMessage(data, "https://brspnnggrt.github.io/")
+iframe.contentWindow.postMessage(data, "https://brspnnggrt.github.io/");
 
 */
 
@@ -42,6 +42,12 @@ class App extends Component {
         });
       }
     };
+    this.onDelete = (event, rowData) => {
+      window.parent.postMessage({
+        "execute": `cpq.models.cartList.mainGrid.rows()[${this.state.data.indexOf(rowData)}].actions()[1].activate`,
+        "identifier": "react-existing-quotes-execute"
+      });
+    };
     window.addEventListener("message", this.onMessageReceived, false);
   }
 
@@ -55,18 +61,7 @@ class App extends Component {
             columns={this.state.columns}
             data={this.state.data}
             title="Existing Quotes"
-            actions={[
-              {
-                icon: "Delete",
-                tooltip: "Delete the quote",
-                onClick: (event, rowData) => {
-                  window.parent.postMessage({
-                    "execute": `cpq.models.cartList.mainGrid.rows()[${this.state.data.indexOf(rowData)}].actions()[1].activate`,
-                    "identifier": "react-existing-quotes-execute"
-                  });
-                }
-              }
-            ]}
+            actions={[{ icon: "Delete", tooltip: "Delete the quote", onClick: this.onDelete }]}
           />
       </div>
     );
