@@ -4,14 +4,19 @@ import './App.css';
 import { Component } from 'react'
 import MaterialTable from 'material-table'
 
-// Get data from CPQ using iframe.contentWindow.postMessage(JSON.parse(ko.toJSON(cpq.models.cartList.mainGrid)), "https://brspnnggrt.github.io/")
+/*
+
+data = JSON.parse(ko.toJSON(cpq.models.cartList.mainGrid));
+data["identifier"] = "react-existing-quotes";
+iframe.contentWindow.postMessage(data, "https://brspnnggrt.github.io/")
+
+*/
 
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      source: null,
       loading: true,
       // default columns & row data
       columns: [
@@ -26,7 +31,6 @@ class App extends Component {
       if (event.data.identifier === "react-existing-quotes") {
         console.log(event.data);
         this.setState({
-          source: event.source,
           loading: false,
           columns: event.data.columns.length ? event.data.columns.map(col => { return { title: col.title, field: col.name}; }) : this.state.columns,
           data: event.data.rows.length ? event.data.rows.map(row => { 
@@ -56,7 +60,7 @@ class App extends Component {
                 icon: "Delete",
                 tooltip: "Delete the quote",
                 onClick: (event, rowData) => {
-                  this.state.source.postMessage({
+                  window.parent.postMessage({
                     "execute": `cpq.models.cartList.mainGrid.rows()[${this.state.data.indexOf(rowData)}].actions()[1].activate`,
                     "identifier": "react-existing-quotes-execute"
                   });
