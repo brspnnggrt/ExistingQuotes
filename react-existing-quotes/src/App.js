@@ -61,7 +61,7 @@ class App extends Component {
             columns={this.state.columns}
             data={this.state.data}
             title="Existing Quotes"
-            actions={[{ icon: "Delete", tooltip: "Delete the quote", onClick: this.onDelete }]}
+            actions={[{ icon: "Delete", tooltip: "Delete the quote", onClick: this.onDelete.bind(this) }]} /* try this.onDelete.bind(this) */
           />
       </div>
     );
