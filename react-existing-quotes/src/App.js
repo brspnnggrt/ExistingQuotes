@@ -43,8 +43,14 @@ class App extends Component {
       }
     };
     this.onDelete = (event, rowData) => {
+
+      let parentNode = event.target;
+      while (!parentNode.attributes["index"]) {
+        parentNode = parentNode.parentNode;
+      }
+
       window.parent.postMessage({
-        "execute": `cpq.models.cartList.mainGrid.rows()[${this.state.data.indexOf(rowData)}].actions()[1].activate`,
+        "execute": `cpq.models.cartList.mainGrid.rows()[${parentNode.attributes["index"].value}].actions()[1].activate`,
         "identifier": "react-existing-quotes-execute"
       }, "https://sandbox.webcomcpq.com/");
     };
