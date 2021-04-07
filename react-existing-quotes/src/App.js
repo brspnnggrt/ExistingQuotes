@@ -46,7 +46,7 @@ class App extends Component {
       window.parent.postMessage({
         "execute": `cpq.models.cartList.mainGrid.rows()[${this.state.data.indexOf(rowData)}].actions()[1].activate`,
         "identifier": "react-existing-quotes-execute"
-      });
+      }, "https://sandbox.webcomcpq.com/");
     };
     window.addEventListener("message", this.onMessageReceived, false);
   }
