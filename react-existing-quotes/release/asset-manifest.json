@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/ExistingQuotes/react-existing-quotes/release/static/css/main.2e138a3f.chunk.css",
-    "main.js": "/ExistingQuotes/react-existing-quotes/release/static/js/main.8426b611.chunk.js",
-    "main.js.map": "/ExistingQuotes/react-existing-quotes/release/static/js/main.8426b611.chunk.js.map",
+    "main.js": "/ExistingQuotes/react-existing-quotes/release/static/js/main.342f2e69.chunk.js",
+    "main.js.map": "/ExistingQuotes/react-existing-quotes/release/static/js/main.342f2e69.chunk.js.map",
     "runtime-main.js": "/ExistingQuotes/react-existing-quotes/release/static/js/runtime-main.dbce0ebb.js",
     "runtime-main.js.map": "/ExistingQuotes/react-existing-quotes/release/static/js/runtime-main.dbce0ebb.js.map",
     "static/js/2.e30bc96a.chunk.js": "/ExistingQuotes/react-existing-quotes/release/static/js/2.e30bc96a.chunk.js",
@@ -27,6 +27,6 @@
     "static/js/runtime-main.dbce0ebb.js",
     "static/js/3.ca57adc3.chunk.js",
     "static/css/main.2e138a3f.chunk.css",
-    "static/js/main.8426b611.chunk.js"
+    "static/js/main.342f2e69.chunk.js"
   ]
 }

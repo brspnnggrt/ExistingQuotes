@@ -10,6 +10,8 @@ data = JSON.parse(ko.toJSON(cpq.models.cartList.mainGrid));
 data["identifier"] = "react-existing-quotes";
 iframe.contentWindow.postMessage(data, "https://brspnnggrt.github.io/");
 
+window.addEventListener("message", m => eval(m.data["execute"] + "()"));
+
 */
 
 class App extends Component {
@@ -42,17 +44,18 @@ class App extends Component {
         });
       }
     };
-    this.onDelete = (event, rowData) => {
-
-      let parentNode = event.target;
-      while (!parentNode.attributes["index"]) {
-        parentNode = parentNode.parentNode;
-      }
-
+    this.runAction = (target, action) => {
+      let index = target.closest("tr").attributes["index"].value;
       window.parent.postMessage({
-        "execute": `cpq.models.cartList.mainGrid.rows()[${parentNode.attributes["index"].value}].actions()[1].activate`,
+        "execute": `cpq.models.cartList.mainGrid.rows()[${index}].actions().find(a => a.name == "${action}").activate`,
         "identifier": "react-existing-quotes-execute"
       }, "https://sandbox.webcomcpq.com/");
+    };
+    this.onDelete = event => {
+      this.runAction(event.target, "Delete");
+    };
+    this.onCopy = event => {
+      this.runAction(event.target, "Copy");
     };
     window.addEventListener("message", this.onMessageReceived, false);
   }
@@ -67,7 +70,8 @@ class App extends Component {
             columns={this.state.columns}
             data={this.state.data}
             title="Existing Quotes"
-            actions={[{ icon: "Delete", tooltip: "Delete the quote", onClick: this.onDelete.bind(this) }]} /* try this.onDelete.bind(this) */
+            actions={[{ icon: "delete", tooltip: "Delete quote", onClick: this.onDelete.bind(this) },
+                      { icon: "content_copy", tooltip: "Copy quote", onClick: this.onCopy.bind(this) }]}
           />
       </div>
     );
