@@ -6,11 +6,20 @@ import MaterialTable from 'material-table'
 
 /*
 
-data = JSON.parse(ko.toJSON(cpq.models.cartList.mainGrid));
-data["identifier"] = "react-existing-quotes";
-iframe.contentWindow.postMessage(data, "https://brspnnggrt.github.io/");
 
-window.addEventListener("message", m => eval(m.data["execute"] + "()"));
+<iframe src="https://brspnnggrt.github.io/ExistingQuotes/react-existing-quotes/build/index.html" onload="initializeFrame()"></iframe>
+
+<script>
+
+initializeFrame = () => {
+
+  let data = JSON.parse(ko.toJSON(cpq.models.cartList.mainGrid));
+  iframe.contentWindow.postMessage(data, "https://brspnnggrt.github.io/");
+  window.addEventListener("message", m => eval(m.data["execute"] + "()"));
+
+}
+
+</script>
 
 */
 
