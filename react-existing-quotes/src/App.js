@@ -53,15 +53,26 @@ class App extends Component {
     };
     this.onMessageReceived = event => { /* quote 2.0 quotelist */
       console.log(event.data);
+
+      // prepare data
+      let visibleColumns = event.data.initData.VisibilityRules;
+      let rows = event.data.data.Rows;
+      
+      // transform functions
+      let mapColumns = c => c.map(col => { return { title: col.vrLabel, field: col.vrColumnName }; });
+      let newColumns = visibleColumns.length ? mapColumns(visibleColumns): this.state.columns;
+      let mapRowsToData = r => r.map(row => { 
+        let filteredEntries = Object.entries(row.Data).filter((k, v) => newColumns.includes(k));
+        let mappedEntries = filteredEntries.map((k,v) => (k, v.Value));
+        return Object.fromEntries(mappedEntries);
+      });
+      let newData = rows.length ? mapRowsToData(rows) : this.state.data;
+
+      // update state if data available
       this.setState({
         loading: false,
-        columns: event.data.columns.length ? event.data.initData.VisibilityRules.map(col => { return { title: col.vrLabel, field: col.vrColumnName }; }) : this.state.columns,
-        data: event.data.data.Rows.length ? event.data.data.Rows.map(row => { 
-          // let keys = row.data.slice(1).map(t => t.columnName);
-          // let values = row.data.slice(1).map(t => t.value);
-          let data = row.Data; // Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]));
-          return data;
-        }) : this.state.data
+        columns: newColumns,
+        data: newData
       });
     };
     this.runAction = (target, action) => {
