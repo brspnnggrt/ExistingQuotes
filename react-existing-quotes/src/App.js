@@ -58,7 +58,7 @@ class App extends Component {
       let visibleColumns = event.data.initData.VisibilityRules;
       let rows = event.data.data.Rows;
       
-      // transform functions
+      // transform data
       let mapColumns = c => c.map(col => { return { title: col.vrLabel, field: col.vrColumnName }; });
       let newColumns = visibleColumns.length ? mapColumns(visibleColumns): this.state.columns;
       let mapRowsToData = r => r.map(row => { 
