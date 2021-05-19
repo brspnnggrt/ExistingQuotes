@@ -62,7 +62,7 @@ class App extends Component {
       let mapColumns = c => c.map(col => { return { title: col.vrLabel, field: col.vrColumnName }; });
       let newColumns = visibleColumns.length ? mapColumns(visibleColumns): this.state.columns;
       let mapRowsToData = r => r.map(row => { 
-        let filteredEntries = Object.entries(row.Data).filter(([k,v]) => newColumns.map(nc => nc.vrColumnName).includes(k));
+        let filteredEntries = Object.entries(row.Data).filter(([k,v]) => newColumns.map(nc => nc.field).includes(k));
         let mappedEntries = filteredEntries.map(([k,v]) => (k, v.Value));
         return Object.fromEntries(mappedEntries);
       });
