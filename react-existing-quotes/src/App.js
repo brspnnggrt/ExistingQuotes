@@ -38,7 +38,7 @@ class App extends Component {
       ],
       data: [{ name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 }],
     };
-    this.onMessageReceived = event => {
+    this.onMessageReceivedOld = event => { /* quote 1.0 cartlist */
       console.log(event.data);
       this.setState({
         loading: false,
@@ -47,6 +47,19 @@ class App extends Component {
           let keys = row.cells.slice(1).map(t => t.columnName);
           let values = row.cells.slice(1).map(t => t.value);
           let data = Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]));
+          return data;
+        }) : this.state.data
+      });
+    };
+    this.onMessageReceived = event => { /* quote 2.0 quotelist */
+      console.log(event.data);
+      this.setState({
+        loading: false,
+        columns: event.data.columns.length ? event.data.initData.VisibilityRules.map(col => { return { title: col.vrLabel, field: col.vrColumnName }; }) : this.state.columns,
+        data: event.data.data.Rows.length ? event.data.data.Rows.map(row => { 
+          // let keys = row.data.slice(1).map(t => t.columnName);
+          // let values = row.data.slice(1).map(t => t.value);
+          let data = row.Data; // Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]));
           return data;
         }) : this.state.data
       });
