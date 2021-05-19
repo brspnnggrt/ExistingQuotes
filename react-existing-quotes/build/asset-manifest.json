@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/ExistingQuotes/react-existing-quotes/build/static/css/main.2e138a3f.chunk.css",
+    "main.css": "/ExistingQuotes/react-existing-quotes/build/static/css/main.2fb8ca35.chunk.css",
     "main.js": "/ExistingQuotes/react-existing-quotes/build/static/js/main.5efdb64a.chunk.js",
     "main.js.map": "/ExistingQuotes/react-existing-quotes/build/static/js/main.5efdb64a.chunk.js.map",
     "runtime-main.js": "/ExistingQuotes/react-existing-quotes/build/static/js/runtime-main.10650720.js",
@@ -16,7 +16,7 @@
     "static/js/6.4f0b0b1e.chunk.js": "/ExistingQuotes/react-existing-quotes/build/static/js/6.4f0b0b1e.chunk.js",
     "static/js/6.4f0b0b1e.chunk.js.map": "/ExistingQuotes/react-existing-quotes/build/static/js/6.4f0b0b1e.chunk.js.map",
     "index.html": "/ExistingQuotes/react-existing-quotes/build/index.html",
-    "static/css/main.2e138a3f.chunk.css.map": "/ExistingQuotes/react-existing-quotes/build/static/css/main.2e138a3f.chunk.css.map",
+    "static/css/main.2fb8ca35.chunk.css.map": "/ExistingQuotes/react-existing-quotes/build/static/css/main.2fb8ca35.chunk.css.map",
     "static/js/2.98bae3ff.chunk.js.LICENSE.txt": "/ExistingQuotes/react-existing-quotes/build/static/js/2.98bae3ff.chunk.js.LICENSE.txt",
     "static/js/3.4b391931.chunk.js.LICENSE.txt": "/ExistingQuotes/react-existing-quotes/build/static/js/3.4b391931.chunk.js.LICENSE.txt",
     "static/js/4.44beb4d6.chunk.js.LICENSE.txt": "/ExistingQuotes/react-existing-quotes/build/static/js/4.44beb4d6.chunk.js.LICENSE.txt",
@@ -26,7 +26,7 @@
   "entrypoints": [
     "static/js/runtime-main.10650720.js",
     "static/js/3.4b391931.chunk.js",
-    "static/css/main.2e138a3f.chunk.css",
+    "static/css/main.2fb8ca35.chunk.css",
     "static/js/main.5efdb64a.chunk.js"
   ]
 }
