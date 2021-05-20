@@ -64,6 +64,9 @@ class App extends Component {
       let mapRowsToData = r => r.map(row => { 
         let filteredEntries = Object.entries(row.Data).filter(([k,v]) => newColumns.map(nc => nc.field).includes(k));
         let mappedEntries = filteredEntries.map(([k,v]) => [k, v.Value]);
+        mappedEntries.append(['cryptedOwnerId', row.ApproverId]);
+        mappedEntries.append(['cryptedCartId', row.cryptedCartId]);
+        mappedEntries.append(['approverId', row.approverId]);
         return Object.fromEntries(mappedEntries);
       });
       let newData = rows.length ? mapRowsToData(rows) : this.state.data;
@@ -75,18 +78,17 @@ class App extends Component {
         data: newData
       });
     };
-    this.runAction = (target, action) => {
-      let index = target.closest("tr").attributes["index"].value;
+    this.runAction = (actionId, rowData) => {
       window.parent.postMessage({
-        "execute": `cpq.models.cartList.mainGrid.rows()[${index}].actions().find(a => a.name == "${action}").activate`,
-        "identifier": "react-existing-quotes-execute"
+        api: 'quoteList',
+        function: 'executeAction',
+        arguments: [{
+          actionId: actionId,
+          cryptedOwnerId: rowData.cryptedOwnerId,
+          cryptedCartId: rowData.cryptedCartId,
+          approverId: rowData.approverId
+        }]
       }, "https://sandbox.webcomcpq.com/");
-    };
-    this.onDelete = event => {
-      this.runAction(event.target, "Delete");
-    };
-    this.onCopy = event => {
-      this.runAction(event.target, "Copy");
     };
     window.addEventListener("message", this.onMessageReceived, false);
   }
@@ -101,8 +103,8 @@ class App extends Component {
             columns={this.state.columns}
             data={this.state.data}
             title="Existing Quotes"
-            actions={[{ icon: "delete", tooltip: "Delete quote", onClick: this.onDelete.bind(this) },
-                      { icon: "content_copy", tooltip: "Copy quote", onClick: this.onCopy.bind(this) }]}
+            actions={[{ icon: "delete", tooltip: "Delete quote", onClick: (event, rowData) => this.runAction(1, rowData)},
+                      { icon: "content_copy", tooltip: "Copy quote", onClick: (event, rowData) => this.runAction(4, rowData) }]}
           />
       </div>
     );
