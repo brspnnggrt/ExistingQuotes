@@ -103,7 +103,7 @@ class App extends Component {
             columns={this.state.columns}
             data={this.state.data}
             title="Existing Quotes"
-            actions={[{ icon: "delete", tooltip: "Delete quote", onClick: (event, rowData) => this.runAction(1, rowData)},
+            actions={[{ icon: "delete", tooltip: "Delete quote", onClick: (event, rowData) => this.runAction(2, rowData)},
                       { icon: "content_copy", tooltip: "Copy quote", onClick: (event, rowData) => this.runAction(4, rowData) }]}
           />
       </div>
