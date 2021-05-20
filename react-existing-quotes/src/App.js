@@ -65,7 +65,7 @@ class App extends Component {
         let filteredEntries = Object.entries(row.Data).filter(([k,v]) => newColumns.map(nc => nc.field).includes(k));
         let mappedEntries = filteredEntries.map(([k,v]) => [k, v.Value]);
         mappedEntries.push(['cryptedOwnerId', row.CryptedOwnerId]);
-        mappedEntries.push(['cryptedCartId', row.CryptedCartId]);
+        mappedEntries.push(['cryptedCartId', row.CryptedQuoteId]);
         mappedEntries.push(['approverId', row.ApproverId]);
         return Object.fromEntries(mappedEntries);
       });
