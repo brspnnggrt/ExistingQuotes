@@ -1,9 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 
-import { Component } from 'react'
+import React, { Component }  from 'react';
 import MaterialTable from 'material-table'
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 
 /*
 
@@ -30,7 +30,6 @@ class App extends Component {
         super(props);
         this.state = {
             loading: true,
-            requestDataTaskId: uuidv4(),
             columns: [
                 { title: 'Adı', field: 'name' },
                 { title: 'Soyadı', field: 'surname' },
@@ -55,12 +54,12 @@ class App extends Component {
         this.onMessageReceived = event => { /* quote 2.0 quotelist */
             console.log(event.data);
 
-            if (event.data.taskId == this.state.requestDataTaskId) this.update(event);
+            if (event.data.taskId === 'react-existing-quotes-query') this.update(event);
         };
         this.runAction = (actionId, rowData) => {
             window.parent.postMessage({
                 iframe: 'react-existing-quotes',
-                taskId: uuidv4(),
+                taskId: 'react-existing-quotes-executeaction',
                 queries: [{
                     api: 'quoteList',
                     function: 'executeAction',
@@ -78,7 +77,7 @@ class App extends Component {
         window.addEventListener("message", this.onMessageReceived, false);
         window.parent.postMessage({
             iframe: 'react-existing-quotes',
-            taskId: uuidv4(),
+            taskId: 'react-existing-quotes-query',
             queries: [{
                 api: 'quoteList',
                 function: 'getInitData',
@@ -104,10 +103,10 @@ class App extends Component {
         }, "https://sandbox.webcomcpq.com/");
     }
 
-    update(event) {
+    update = (event) => {
         // prepare data
-        let getInitData = event.data.response.find(r => r.api == 'quoteList' && r.function == 'getInitData');
-        let getData = event.data.response.find(r => r.api == 'quoteList' && r.function == 'getData');
+        let getInitData = event.data.response.find(r => r.api === 'quoteList' && r.function === 'getInitData');
+        let getData = event.data.response.find(r => r.api === 'quoteList' && r.function === 'getData');
         let visibleColumns = getInitData.data.VisibilityRules;
         let rows = getData.data.Rows;
 
@@ -130,7 +129,7 @@ class App extends Component {
             columns: newColumns,
             data: newData
         });
-    }
+    };
 
     render() {
         return (
