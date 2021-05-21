@@ -60,7 +60,7 @@ class App extends Component {
             window.parent.postMessage({
                 iframe: 'react-existing-quotes',
                 taskId: 'react-existing-quotes-executeaction',
-                queries: [{
+                query: [{
                     api: 'quoteList',
                     function: 'executeAction',
                     arguments: [{
@@ -70,7 +70,7 @@ class App extends Component {
                         approverId: rowData.approverId
                     }]
                 }],
-                data: [],
+                response: [],
                 status: 'request'
             }, "https://sandbox.webcomcpq.com/");
         };
