@@ -53,8 +53,8 @@ class App extends Component {
         };
         this.onMessageReceived = event => { /* quote 2.0 quotelist */
             console.log(event.data);
-
             if (event.data.taskId === 'react-existing-quotes-query') this.update(event);
+            if (event.data.taskId === 'react-existing-quotes-executeaction') this.requestUpdate();
         };
         this.runAction = (actionId, rowData) => {
             window.parent.postMessage({
@@ -75,6 +75,10 @@ class App extends Component {
             }, "https://sandbox.webcomcpq.com/");
         };
         window.addEventListener("message", this.onMessageReceived, false);
+        this.requestUpdate();
+    }
+
+    requestUpdate = () => {
         window.parent.postMessage({
             iframe: 'react-existing-quotes',
             taskId: 'react-existing-quotes-query',
@@ -101,7 +105,7 @@ class App extends Component {
             response: [],
             status: 'request'
         }, "https://sandbox.webcomcpq.com/");
-    }
+    };
 
     update = (event) => {
         // prepare data
