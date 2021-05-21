@@ -31,7 +31,7 @@ class App extends Component {
 
     onMessageReceived = event => {
         if (event.data.taskId === this.state.taskIdRequestData) this.update(event);
-        if (event.data.taskId === this.state.taskIdRunAction) this.requestUpdate();
+        if (event.data.taskId === this.state.taskIdRunAction) this.requestData();
     };
 
     requestData = () => {
