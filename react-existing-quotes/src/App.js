@@ -3,24 +3,12 @@ import './App.css';
 
 import React, { Component }  from 'react';
 import MaterialTable from 'material-table'
-// import { v4 as uuidv4 } from 'uuid';
 
 /*
 
-
-<iframe src="https://brspnnggrt.github.io/ExistingQuotes/react-existing-quotes/build/index.html" onload="initializeFrame()"></iframe>
-
-<script>
-
-initializeFrame = () => {
-
-  let data = JSON.parse(ko.toJSON(cpq.models.cartList.mainGrid));
-  iframe.contentWindow.postMessage(data, "https://brspnnggrt.github.io/");
-  window.addEventListener("message", m => eval(m.data["execute"] + "()"));
-
-}
-
-</script>
+Usage: 
+<iframe id='react-existing-quotes' src="https://brspnnggrt.github.io/ExistingQuotes/react-existing-quotes/build/" style="width: 100%; border: 0px; height: 700px;"></iframe>
+<script src='https://brspnnggrt.github.io/ExistingQuotes/react-existing-quotes/build/jsom.js'></script>
 
 */
 
@@ -28,60 +16,28 @@ class App extends Component {
 
     constructor(props) {
         super(props);
+        const id = 'react-existing-quotes';
         this.state = {
             loading: true,
-            columns: [
-                { title: 'Adı', field: 'name' },
-                { title: 'Soyadı', field: 'surname' },
-                { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
-                { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
-            ],
-            data: [{ name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 }]
-        };
-        this.onMessageReceivedOld = event => { /* quote 1.0 cartlist */
-            console.log(event.data);
-            this.setState({
-                loading: false,
-                columns: event.data.columns.length ? event.data.columns.map(col => { return { title: col.title, field: col.name }; }) : this.state.columns,
-                data: event.data.rows.length ? event.data.rows.map(row => {
-                    let keys = row.cells.slice(1).map(t => t.columnName);
-                    let values = row.cells.slice(1).map(t => t.value);
-                    let data = Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]));
-                    return data;
-                }) : this.state.data
-            });
-        };
-        this.onMessageReceived = event => { /* quote 2.0 quotelist */
-            console.log(event.data);
-            if (event.data.taskId === 'react-existing-quotes-query') this.update(event);
-            if (event.data.taskId === 'react-existing-quotes-executeaction') this.requestUpdate();
-        };
-        this.runAction = (actionId, rowData) => {
-            window.parent.postMessage({
-                iframe: 'react-existing-quotes',
-                taskId: 'react-existing-quotes-executeaction',
-                query: [{
-                    api: 'quoteList',
-                    function: 'executeAction',
-                    arguments: [{
-                        actionId: actionId,
-                        cryptedOwnerId: rowData.cryptedOwnerId,
-                        cryptedCartId: rowData.cryptedCartId,
-                        approverId: rowData.approverId
-                    }]
-                }],
-                response: [],
-                status: 'request'
-            }, "https://sandbox.webcomcpq.com/");
+            id: id,
+            taskIdRequestData: `${id}-requestData`,
+            taskIdRunAction: `${id}-runAction`,
+            columns: [],
+            data: []
         };
         window.addEventListener("message", this.onMessageReceived, false);
-        this.requestUpdate();
+        this.requestData();
     }
 
-    requestUpdate = () => {
+    onMessageReceived = event => {
+        if (event.data.taskId === this.state.taskIdRequestData) this.update(event);
+        if (event.data.taskId === this.state.taskIdRunAction) this.requestUpdate();
+    };
+
+    requestData = () => {
         window.parent.postMessage({
-            iframe: 'react-existing-quotes',
-            taskId: 'react-existing-quotes-query',
+            iframe: this.state.id,
+            taskId: this.state.taskIdRequestData,
             query: [{
                 api: 'quoteList',
                 function: 'getInitData',
@@ -100,6 +56,25 @@ class App extends Component {
                     'UsePaging': true,
                     'LoadDelegatedApproversQuotes': false,
                     'TabId': 1
+                }]
+            }],
+            response: [],
+            status: 'request'
+        }, "https://sandbox.webcomcpq.com/");
+    };
+
+    runAction = (actionId, rowData) => {
+        window.parent.postMessage({
+            iframe: this.state.id,
+            taskId: this.state.taskIdRunAction,
+            query: [{
+                api: 'quoteList',
+                function: 'executeAction',
+                arguments: [{
+                    actionId: actionId,
+                    cryptedOwnerId: rowData.cryptedOwnerId,
+                    cryptedCartId: rowData.cryptedCartId,
+                    approverId: rowData.approverId
                 }]
             }],
             response: [],
@@ -142,11 +117,12 @@ class App extends Component {
                     <img src={logo} className="App-logo" alt="logo" />
                 </header>
                 <MaterialTable
+                    onChangeRowsPerPage
                     columns={this.state.columns}
                     data={this.state.data}
                     title="Existing Quotes"
                     actions={[{ icon: "delete", tooltip: "Delete quote", onClick: (event, rowData) => this.runAction(2, rowData) },
-                    { icon: "content_copy", tooltip: "Copy quote", onClick: (event, rowData) => this.runAction(4, rowData) }]}
+                              { icon: "content_copy", tooltip: "Copy quote", onClick: (event, rowData) => this.runAction(4, rowData) }]}
                 />
             </div>
         );

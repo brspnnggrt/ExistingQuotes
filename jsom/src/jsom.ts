@@ -51,7 +51,7 @@ interface IPostMessage {
 
 (() => {
         
-    var utils: IUtils = {
+    const utils: IUtils = {
         _buildPairString: (query: object) => {
             let keysList = Object.keys(query);
             let pairString: string = '';
@@ -93,7 +93,7 @@ interface IPostMessage {
         }
     };
 
-    var api: IApi = {
+    const api: IApi = {
         quoteList: {
             getInitData: async query => utils.get('/api/rd/v1/QuoteList/GetInitData', query),
             getData: async query => utils.get('/api/rd/v1/QuoteList/GetData', query),

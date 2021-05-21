@@ -1,5 +1,5 @@
 (() => {
-    var utils = {
+    const utils = {
         _buildPairString: (query) => {
             let keysList = Object.keys(query);
             let pairString = '';
@@ -42,7 +42,7 @@
             return await response.json();
         }
     };
-    var api = {
+    const api = {
         quoteList: {
             getInitData: async (query) => utils.get('/api/rd/v1/QuoteList/GetInitData', query),
             getData: async (query) => utils.get('/api/rd/v1/QuoteList/GetData', query),
