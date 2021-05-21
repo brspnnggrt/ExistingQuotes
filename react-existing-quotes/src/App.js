@@ -78,7 +78,7 @@ class App extends Component {
         window.parent.postMessage({
             iframe: 'react-existing-quotes',
             taskId: 'react-existing-quotes-query',
-            queries: [{
+            query: [{
                 api: 'quoteList',
                 function: 'getInitData',
                 arguments: [{
@@ -98,7 +98,7 @@ class App extends Component {
                     'TabId': 1
                 }]
             }],
-            data: [],
+            response: [],
             status: 'request'
         }, "https://sandbox.webcomcpq.com/");
     }
