@@ -615,7 +615,7 @@
     window.addEventListener("message", async (message) => {
         let request = message.data;
         request.response = await Promise.all(request.query.map(async (q) => {
-            const queueApi = [...q.api];
+            const queueApi = q.api.split('/').filter(x => x !== '');
             let selectedApi = api;
             while (queueApi.length)
                 selectedApi = selectedApi[queueApi.shift()];

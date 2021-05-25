@@ -39,12 +39,12 @@ interface IPostMessage {
     iframe: string;
     taskId: string;
     query: {
-        api: string[];
+        api: string;
         function: string;
         arguments: any[];
     }[];
     response: {
-        api: string[];
+        api: string;
         function: string;
         data: any;
     }[];
@@ -670,7 +670,7 @@ interface IPostMessage {
     {
         let request: IPostMessage = message.data;
         request.response = await Promise.all(request.query.map(async q => {
-            const queueApi = [...q.api];
+            const queueApi = q.api.split('/').filter(x => x !== '');
             let selectedApi: {} = api;
             while (queueApi.length) selectedApi = selectedApi[queueApi.shift()];
             return { 

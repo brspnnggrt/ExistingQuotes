@@ -39,13 +39,13 @@ class App extends Component {
             iframe: this.state.id,
             taskId: this.state.taskIdRequestData,
             query: [{
-                api: ['rd', 'v1', 'quoteList'],
+                api: '/rd/v1/quoteList',
                 function: 'getInitData',
                 arguments: [{
                     'tabId': '0'
                 }]
             },{
-                api: ['rd', 'v1', 'quoteList'],
+                api: '/rd/v1/quoteList',
                 function: 'getData',
                 arguments: [{
                     'Columns': ['SYSTEM_QUOTATION_NUMBER', 'CUSTOMER_COMPANY', 'USER_NAME', 'DATE_CREATED', 'cf_Terms',
@@ -68,7 +68,7 @@ class App extends Component {
             iframe: this.state.id,
             taskId: this.state.taskIdRunAction,
             query: [{
-                api: ['rd', 'v1', 'quoteList'],
+                api: '/rd/v1/quoteList',
                 function: 'executeAction',
                 arguments: [{
                     actionId: actionId,
@@ -84,8 +84,8 @@ class App extends Component {
 
     update = (event) => {
         // prepare data
-        let getInitData = event.data.response.find(r => r.api === 'quoteList' && r.function === 'getInitData');
-        let getData = event.data.response.find(r => r.api === 'quoteList' && r.function === 'getData');
+        let getInitData = event.data.response.find(r => r.api === '/rd/v1/quoteList' && r.function === 'getInitData');
+        let getData = event.data.response.find(r => r.api === '/rd/v1/quoteList' && r.function === 'getData');
         let visibleColumns = getInitData.data.VisibilityRules;
         let rows = getData.data.Rows;
 
