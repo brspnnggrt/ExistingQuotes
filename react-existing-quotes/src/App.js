@@ -39,13 +39,13 @@ class App extends Component {
             iframe: this.state.id,
             taskId: this.state.taskIdRequestData,
             query: [{
-                api: 'quoteList',
+                api: ['rd', 'v1', 'quoteList'],
                 function: 'getInitData',
                 arguments: [{
                     'tabId': '0'
                 }]
             },{
-                api: 'quoteList',
+                api: ['rd', 'v1', 'quoteList'],
                 function: 'getData',
                 arguments: [{
                     'Columns': ['SYSTEM_QUOTATION_NUMBER', 'CUSTOMER_COMPANY', 'USER_NAME', 'DATE_CREATED', 'cf_Terms',
@@ -68,7 +68,7 @@ class App extends Component {
             iframe: this.state.id,
             taskId: this.state.taskIdRunAction,
             query: [{
-                api: 'quoteList',
+                api: ['rd', 'v1', 'quoteList'],
                 function: 'executeAction',
                 arguments: [{
                     actionId: actionId,

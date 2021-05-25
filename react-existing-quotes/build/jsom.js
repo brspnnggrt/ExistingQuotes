@@ -69,11 +69,6 @@
     const api = {
         rd: {
             v1: {
-                // quoteList: {
-                //     getInitData: async query => utils.get('/api/rd/v1/QuoteList/GetInitData', query),
-                //     getData: async query => utils.get('/api/rd/v1/QuoteList/GetData', query),
-                //     executeAction: async body => utils.post('/api/rd/v1/QuoteList/ExecuteAction', body)
-                // },
                 approvalHistory: {
                     getApprovalHistoryModelInit: query => utils.get('/api/rd/v1/ApprovalHistory/GetApprovalHistoryModelInit', query),
                     getApprovalHistoryModelInitData: query => utils.get('/api/rd/v1/ApprovalHistory/GetApprovalHistoryModelInitData', query),
@@ -592,7 +587,7 @@
                 'delete{rowId}': body => utils.delete('/api/v1/quotes/{quoteId}/quoteTables/{tableName}/rows/{rowId}', body),
                 'patch{rowId}': body => utils.patch('/api/v1/quotes/{quoteId}/quoteTables/{tableName}/rows/{rowId}', body),
                 quoteTable$count: query => utils.get('/api/v1/quotes/{quoteId}/quoteTables/{tableName}/rows/$count', query),
-                item$count: quoteId => utils.get(`/api/v1/quotes/${quoteId}/items/$count`, ''),
+                item$count: query => utils.get('/api/v1/quotes/{quoteId}/items/$count', query),
                 selectedAttributes: query => utils.get('/api/v1/quotes/{quoteId}/items/{itemId}/selectedAttributes', query),
                 itemPricingConditions: query => utils.get('/api/v1/quotes/{quoteId}/items/{itemId}/pricingConditions', query),
                 pricingConditions: query => utils.get('/api/v1/quotes/{quoteId}/pricingConditions', query),
@@ -620,10 +615,14 @@
     window.addEventListener("message", async (message) => {
         let request = message.data;
         request.response = await Promise.all(request.query.map(async (q) => {
+            const queueApi = [...q.api];
+            let selectedApi = api;
+            while (queueApi.length)
+                selectedApi = api[queueApi.shift()];
             return {
                 api: q.api,
                 function: q.function,
-                data: await api[q.api][q.function](...q.arguments)
+                data: await selectedApi[q.function](...q.arguments)
             };
         }));
         request.status = 'response';

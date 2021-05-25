@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "9eef94c909744bae0194",
+    "revision": "a83cb7ae9a4f403834d9",
     "url": "/ExistingQuotes/react-existing-quotes/build/static/css/main.b793e5a9.chunk.css"
   },
   {
-    "revision": "9eef94c909744bae0194",
-    "url": "/ExistingQuotes/react-existing-quotes/build/static/js/main.f7a14ecc.chunk.js"
+    "revision": "a83cb7ae9a4f403834d9",
+    "url": "/ExistingQuotes/react-existing-quotes/build/static/js/main.8219a55d.chunk.js"
   },
   {
     "revision": "dfdd0ca161d8a5fd34b7",
@@ -36,7 +36,7 @@ self.__precacheManifest = [
     "url": "/ExistingQuotes/react-existing-quotes/build/static/media/logo.06e73328.svg"
   },
   {
-    "revision": "766864ba93d276b8c40804f40d1f275d",
+    "revision": "b40800d5cec274e040e2c41ddab01162",
     "url": "/ExistingQuotes/react-existing-quotes/build/index.html"
   }
 ];
