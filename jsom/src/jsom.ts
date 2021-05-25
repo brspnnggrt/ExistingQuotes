@@ -672,7 +672,7 @@ interface IPostMessage {
         request.response = await Promise.all(request.query.map(async q => {
             const queueApi = [...q.api];
             let selectedApi: {} = api;
-            while (queueApi.length) selectedApi = api[queueApi.shift()];
+            while (queueApi.length) selectedApi = selectedApi[queueApi.shift()];
             return { 
                 api: q.api,
                 function: q.function,

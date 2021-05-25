@@ -618,7 +618,7 @@
             const queueApi = [...q.api];
             let selectedApi = api;
             while (queueApi.length)
-                selectedApi = api[queueApi.shift()];
+                selectedApi = selectedApi[queueApi.shift()];
             return {
                 api: q.api,
                 function: q.function,
