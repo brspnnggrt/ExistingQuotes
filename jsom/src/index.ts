@@ -18,7 +18,6 @@ interface IPostMessage {
     status: string;
 }
 
-(window as any).testtttt = swaggerApi;
 window.addEventListener("message", async message => 
 {
     let request: IPostMessage = message.data;
@@ -29,9 +28,9 @@ window.addEventListener("message", async message =>
         return { 
             api: q.api,
             function: q.function,
-            data: await (swaggerApi as any)[serviceName] ? 
+            data: await ((swaggerApi as any)[serviceName] ? 
                         (swaggerApi as any)[serviceName][functionName](...q.arguments) : 
-                        (customApi as any)[serviceName][functionName](...q.arguments)
+                        (customApi as any)[serviceName][functionName](...q.arguments))
         }
     }));
     request.status = 'response';
