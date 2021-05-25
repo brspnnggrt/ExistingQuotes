@@ -23,12 +23,15 @@ window.addEventListener("message", async message =>
 {
     let request: IPostMessage = message.data;
     request.response = await Promise.all(request.query.map(async q => {
+        let capitalize = (str: string) => str[0].toUpperCase() + str.slice(1);
+        let serviceName = capitalize(q.api) + 'Service';
+        let functionName = q.api + q.function;
         return { 
             api: q.api,
             function: q.function,
-            data: await (swaggerApi as any)[q.api] ? 
-                        (swaggerApi as any)[q.api][q.function](...q.arguments) : 
-                        (customApi as any)[q.api][q.function](...q.arguments)
+            data: await (swaggerApi as any)[serviceName] ? 
+                        (swaggerApi as any)[serviceName][functionName](...q.arguments) : 
+                        (customApi as any)[serviceName][functionName](...q.arguments)
         }
     }));
     request.status = 'response';
