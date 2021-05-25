@@ -19,8 +19,7 @@
     "start": "set HTTPS=true&&react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "openapi": "openapi -i src/services/swagger_sandbox_clean.json -o src/services/openapi"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -39,9 +38,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "openapi-typescript": "^3.2.4",
-    "openapi-typescript-codegen": "^0.9.3"
   }
 }

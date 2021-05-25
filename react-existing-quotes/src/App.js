@@ -4,14 +4,6 @@ import './App.css';
 import React, { Component }  from 'react';
 import MaterialTable from 'material-table'
 
-import { QuoteListService, QuotesService, ScriptingService } from './services/swagger';
-import { CustomAPIService } from './services/custom';
-
-QuoteListService.quoteListGetInitData(0);
-QuotesService.quotesCreateNewQuote({});
-CustomAPIService.executeScript({scriptName: 'hello', param: {}});
-ScriptingService.
-
 /*
 
 Usage: 
@@ -117,14 +109,6 @@ class App extends Component {
             data: newData
         });
     };
-
-    test = async () => {
-        await
-
-        .then(() => {
-
-        })
-    } 
 
     render() {
         return (
