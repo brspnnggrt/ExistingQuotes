@@ -4,6 +4,14 @@ import './App.css';
 import React, { Component }  from 'react';
 import MaterialTable from 'material-table'
 
+import { QuoteListService, QuotesService, ScriptingService } from './services/swagger';
+import { CustomAPIService } from './services/custom';
+
+QuoteListService.quoteListGetInitData(0);
+QuotesService.quotesCreateNewQuote({});
+CustomAPIService.executeScript({scriptName: 'hello', param: {}});
+ScriptingService.
+
 /*
 
 Usage: 
@@ -110,10 +118,18 @@ class App extends Component {
         });
     };
 
+    test = async () => {
+        await
+
+        .then(() => {
+
+        })
+    } 
+
     render() {
         return (
             <div className="App">
-                <header className="App-header">
+                <header className="n-8 App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                 </header>
                 <MaterialTable
