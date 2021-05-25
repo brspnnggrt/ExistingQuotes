@@ -25,7 +25,7 @@ window.addEventListener("message", async message =>
     request.response = await Promise.all(request.query.map(async q => {
         let capitalize = (str: string) => str[0].toUpperCase() + str.slice(1);
         let serviceName = capitalize(q.api) + 'Service';
-        let functionName = q.api + q.function;
+        let functionName = q.api + capitalize(q.function);
         return { 
             api: q.api,
             function: q.function,
