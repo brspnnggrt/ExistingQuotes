@@ -97,9 +97,10 @@ class App extends Component
         // prepare data
         let getInitData = event.data.response.find(r => r.api === '/api/rd/v1/QuoteList' && r.function === 'getInitData');
         let getData = event.data.response.find(r => r.api === '/api/rd/v1/QuoteList' && r.function === 'getData');
-        let featureFlag = event.data.response.find(r => r.api === '/CustomAPI' && r.function === 'ExecuteScript');
+        let featureFlagData = event.data.response.find(r => r.api === '/CustomAPI' && r.function === 'ExecuteScript');
         let visibleColumns = getInitData.data.VisibilityRules;
         let rows = getData.data.Rows;
+        let featureFlag = featureFlagData.data;
 
         // transform data
         let mapColumns = c => c.map(col => { return { title: col.vrLabel, field: col.vrColumnName }; });
