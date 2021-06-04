@@ -12,9 +12,11 @@ Usage:
 
 */
 
-class App extends Component {
+class App extends Component 
+{
 
-    constructor(props) {
+    constructor(props)
+    {
         super(props);
         const id = 'react-existing-quotes';
         this.state = {
@@ -23,18 +25,21 @@ class App extends Component {
             taskIdRequestData: `${id}-requestData`,
             taskIdRunAction: `${id}-runAction`,
             columns: [],
-            data: []
+            data: [],
+            featureFlag: {'CopyQuote' : 0}
         };
         window.addEventListener("message", this.onMessageReceived, false);
         this.requestData();
     }
 
-    onMessageReceived = event => {
+    onMessageReceived = event => 
+    {
         if (event.data.taskId === this.state.taskIdRequestData) this.update(event);
         if (event.data.taskId === this.state.taskIdRunAction) this.requestData();
     };
 
-    requestData = () => {
+    requestData = () => 
+    {
         window.parent.postMessage({
             iframe: this.state.id,
             taskId: this.state.taskIdRequestData,
@@ -58,7 +63,7 @@ class App extends Component {
                     'TabId': 1
                 }]
             },{
-                api: '/CustomAPI/',
+                api: '/CustomAPI',
                 function: 'ExecuteScript',
                 arguments: [ 'FeatureFlag', { Features: ['CopyQuote']} ]
             }],
@@ -67,7 +72,8 @@ class App extends Component {
         }, "https://sandbox.webcomcpq.com/");
     };
 
-    runAction = (actionId, rowData) => {
+    runAction = (actionId, rowData) => 
+    {
         window.parent.postMessage({
             iframe: this.state.id,
             taskId: this.state.taskIdRunAction,
@@ -86,10 +92,12 @@ class App extends Component {
         }, "https://sandbox.webcomcpq.com/");
     };
 
-    update = (event) => {
+    update = event => 
+    {
         // prepare data
         let getInitData = event.data.response.find(r => r.api === '/api/rd/v1/QuoteList' && r.function === 'getInitData');
         let getData = event.data.response.find(r => r.api === '/api/rd/v1/QuoteList' && r.function === 'getData');
+        let featureFlag = event.data.response.find(r => r.api === '/CustomAPI' && r.function === 'ExecuteScript');
         let visibleColumns = getInitData.data.VisibilityRules;
         let rows = getData.data.Rows;
 
@@ -110,11 +118,18 @@ class App extends Component {
         this.setState({
             loading: false,
             columns: newColumns,
-            data: newData
+            data: newData,
+            featureFlag: featureFlag
         });
     };
 
-    render() {
+    render() 
+    {
+        let actions = [{ icon: "delete", tooltip: "Delete quote", onClick: (event, rowData) => this.runAction(2, rowData) }];
+        
+        if (this.state.featureFlag.CopyQuote == 1)
+            actions.push({ icon: "content_copy", tooltip: "Copy quote", onClick: (event, rowData) => this.runAction(4, rowData) });
+
         return (
             <div className="App">
                 <header className="n-8 App-header">
@@ -125,8 +140,7 @@ class App extends Component {
                     columns={this.state.columns}
                     data={this.state.data}
                     title="Existing Quotes"
-                    actions={[{ icon: "delete", tooltip: "Delete quote", onClick: (event, rowData) => this.runAction(2, rowData) },
-                              { icon: "content_copy", tooltip: "Copy quote", onClick: (event, rowData) => this.runAction(4, rowData) }]}
+                    actions={actions}
                 />
             </div>
         );
