@@ -622,7 +622,7 @@
                     body: `scriptName=${scriptName}&param=${encodeURIComponent(JSON.stringify(body))}`,
                     headers: {
                         'X-CSRF-Token': csrfToken,
-                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Content-Type': 'application/x-www-form-urlencoded',
                         'Accept': 'application/json'
                     }
                 });
