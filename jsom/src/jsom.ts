@@ -672,7 +672,7 @@ interface IPostMessage {
             ExecuteScript: async (scriptName, body) => {
                 const response = await fetch('/CustomAPI/ExecuteScript', {
                     method: 'post',
-                    body: `scriptName=${scriptName}&param=${encodeURIComponent(body)}`,
+                    body: `scriptName=${scriptName}&param=${encodeURIComponent(JSON.stringify(body))}`,
                     headers: {
                         'X-CSRF-Token': csrfToken,
                         'Content-Type': 'application/json; charset=UTF-8',
