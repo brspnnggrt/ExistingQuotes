@@ -669,7 +669,18 @@ interface IPostMessage {
             }
         },
         CustomAPI: {
-            ExecuteScript: body => utils.post('/CustomAPI/ExecuteScript', body)
+            ExecuteScript: async (scriptName, body) => {
+                const response = await fetch('/CustomAPI/ExecuteScript', {
+                    method: 'post',
+                    body: `scriptName=${scriptName}&param=${encodeURIComponent(body)}`,
+                    headers: {
+                        'X-CSRF-Token': csrfToken,
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Accept': 'application/json'
+                    }
+                });
+                return await response.json();
+            }
         }
     };
 

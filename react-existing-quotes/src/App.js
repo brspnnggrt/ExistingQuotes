@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import React, { Component }  from 'react';
-import MaterialTable from 'material-table'
+import MaterialTable from 'material-table';
 
 /*
 
@@ -57,6 +57,10 @@ class App extends Component {
                     'LoadDelegatedApproversQuotes': false,
                     'TabId': 1
                 }]
+            },{
+                api: '/CustomAPI/',
+                function: 'ExecuteScript',
+                arguments: [ 'FeatureFlag', { Features: ['CopyQuote']} ]
             }],
             response: [],
             status: 'request'
